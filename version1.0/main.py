@@ -3,22 +3,22 @@ import time
 import datetime
 import subprocess
 
-class LaunchPowershell: 
-
-    def openPowershell(self):
-        # target_script = 
-        # powershell_command = f"powershell.exe -Execution Policy Bypass -File {target_script}"
-        open_powershell_command = f"powershell.exe"
-        subprocess.run(open_powershell_command, shell=True)
-
-    def main(self):
-        self.openPowershell()
+# class LaunchPowershell: 
+#
+#     def openPowershell(self):
+#         # target_script = 
+#         # powershell_command = f"powershell.exe -Execution Policy Bypass -File {target_script}"
+#         open_powershell_command = f"powershell.exe"
+#         subprocess.run(open_powershell_command, shell=True)
+#
+#     def main(self):
+#         self.openPowershell()
 
 
 
 class ChangeTheHandsOfTime:
 
-    def file_count(self, input_directory, input_years):
+    def file_count(self, input_directory, input_years, file_extensions=None):
         one_year_in_days = 365
         count = 0
 
@@ -30,8 +30,13 @@ class ChangeTheHandsOfTime:
                 file_stat = os.stat(filepath)
                 file_mtime = datetime.datetime.fromtimestamp(file_stat.st_mtime)
 
+                # fix this logic right here because you need the file extension accounted for and the files that are two years or older acounted for do this wihtout haveing the conditional nested like chatgpt provided.
+                if file_extensions is None or os.path.splitext(filename)[1] in file_extensions:
+                    count += 1
+
                 if (current_time - file_mtime).days > one_year_in_days * int(input_years):
                     count += 1
+
                 else:
                     break
 
@@ -105,8 +110,8 @@ class ChangeTheHandsOfTime:
 
 
 if __name__ == "__main__":
-    init_powershell = LaunchPowershell() 
-    init_powershell.main()
+    # init_powershell = LaunchPowershell() 
+    # init_powershell.main()
     init_program = ChangeTheHandsOfTime()
     init_program.main()
 
