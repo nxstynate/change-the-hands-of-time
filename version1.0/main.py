@@ -4,47 +4,41 @@ import datetime
 
 class ChangeTheHandsOfTime:
 
-    def __init__(self, directory, years):
-        self.directory = directory
-        self.years = years * 365
-
-
-    def file_count(self):
+    def file_count(self, input_directory, input_years):
+        one_year_in_days = 365
         count = 0
+
         current_time = datetime.datetime.now()
 
-        for root, _, files in os.walk(self.directory):
+        for root, _, files in os.walk(input_directory):
             for filename in files:
                 filepath = os.path.join(root, filename)
                 file_stat = os.stat(filepath)
                 file_mtime = datetime.datetime.fromtimestamp(file_stat.st_mtime)
 
-                # count += 1
-
-                # Check if the file is older than 2 years
-                if (current_time - file_mtime).days > self.years:
-                    # 365 days/year * 2 years + a buffer
-                    # os.utime(filepath, times=(current_time.timestamp(), current_time.timestamp()))
+                if (current_time - file_mtime).days > one_year_in_days * int(input_years):
                     count += 1
+                else:
+                    break
 
         return count
 
 
-    def change_time_stamp(self):
+    def change_time_stamp(self, input_directory, input_years):
+        one_year_in_days = 365
         count = 0
 
         current_time = datetime.datetime.now()
 
-        for root, _, files in os.walk(self.directory):
+        for root, _, files in os.walk(input_directory):
             for filename in files:
                 filepath = os.path.join(root, filename)
                 file_stat = os.stat(filepath)
                 file_mtime = datetime.datetime.fromtimestamp(file_stat.st_mtime)
 
-                if (current_time - file_mtime).days > self.years:
+                if (current_time - file_mtime).days > one_year_in_days * int(input_years):
                     os.utime(filepath, times=(current_time.timestamp(), current_time.timestamp()))
                     count += 1
-
                 else:
                     break
 
@@ -57,11 +51,13 @@ class ChangeTheHandsOfTime:
 
             if choice == '1': 
                 file_path = input("Enter path to folder:\n")
-                print(f"You have {self.file_count(file_path)} files.")
+                number_of_years = input("Enter number of years:\n")
+                print(f"You have {self.file_count(file_path, number_of_years)} files.")
                 break
 
             elif choice == '2':
                 file_path = input("Enter path to folder:\n")
+                number_of_years = input("Enter number of years:\n")
                 print(f"You have {self.file_count(file_path)} files.")
                 self.change_time_stamp(file_path)
                 print(f"Conversion Completed:\n{file_path}")
@@ -89,10 +85,13 @@ class ChangeTheHandsOfTime:
             else:
                 print("Invalid choice. Please select a valid option.")
 
-def main():
-    init_program = ChangeTheHandsOfTime()
-    init_program.display_menu()
+
+    def main(self):
+        self.display_menu()
+
 
 if __name__ == "__main__":
-    main()
+    init_program = ChangeTheHandsOfTime()
+    init_program.main()
+
 
