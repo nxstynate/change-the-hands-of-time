@@ -1,6 +1,20 @@
 import os
 import time
 import datetime
+import subprocess
+
+class LaunchPowershell: 
+
+    def openPowershell(self):
+        # target_script = 
+        # powershell_command = f"powershell.exe -Execution Policy Bypass -File {target_script}"
+        open_powershell_command = f"powershell.exe"
+        subprocess.run(open_powershell_command, shell=True)
+
+    def main(self):
+        self.openPowershell()
+
+
 
 class ChangeTheHandsOfTime:
 
@@ -58,8 +72,8 @@ class ChangeTheHandsOfTime:
             elif choice == '2':
                 file_path = input("Enter path to folder:\n")
                 number_of_years = input("Enter number of years:\n")
-                print(f"You have {self.file_count(file_path)} files.")
-                self.change_time_stamp(file_path)
+                print(f"You have {self.file_count(file_path, number_of_years)} files.")
+                self.change_time_stamp(file_path, number_of_years)
                 print(f"Conversion Completed:\n{file_path}")
                 break
 
@@ -91,6 +105,8 @@ class ChangeTheHandsOfTime:
 
 
 if __name__ == "__main__":
+    init_powershell = LaunchPowershell() 
+    init_powershell.main()
     init_program = ChangeTheHandsOfTime()
     init_program.main()
 
