@@ -4,11 +4,16 @@ import datetime
 
 class ChangeTheHandsOfTime:
 
-    def file_count(self, directory):
+    def __init__(self, directory, years):
+        self.directory = directory
+        self.years = years * 365
+
+
+    def file_count(self):
         count = 0
         current_time = datetime.datetime.now()
 
-        for root, _, files in os.walk(directory):
+        for root, _, files in os.walk(self.directory):
             for filename in files:
                 filepath = os.path.join(root, filename)
                 file_stat = os.stat(filepath)
@@ -17,7 +22,7 @@ class ChangeTheHandsOfTime:
                 # count += 1
 
                 # Check if the file is older than 2 years
-                if (current_time - file_mtime).days > 1:
+                if (current_time - file_mtime).days > self.years:
                     # 365 days/year * 2 years + a buffer
                     # os.utime(filepath, times=(current_time.timestamp(), current_time.timestamp()))
                     count += 1
@@ -25,13 +30,23 @@ class ChangeTheHandsOfTime:
         return count
 
 
-    def change_time_stamp(self, input_path):
-        files = os.listdir(input_path)
+    def change_time_stamp(self):
+        count = 0
 
-        for file_name in files:
-            file_path = os.path.join(input_path, file_name)
-            new_timestamp = time.time()
-            os.utime(file_path, (new_timestamp, new_timestamp))
+        current_time = datetime.datetime.now()
+
+        for root, _, files in os.walk(self.directory):
+            for filename in files:
+                filepath = os.path.join(root, filename)
+                file_stat = os.stat(filepath)
+                file_mtime = datetime.datetime.fromtimestamp(file_stat.st_mtime)
+
+                if (current_time - file_mtime).days > self.years:
+                    os.utime(filepath, times=(current_time.timestamp(), current_time.timestamp()))
+                    count += 1
+
+                else:
+                    break
 
 
     def display_menu(self):
