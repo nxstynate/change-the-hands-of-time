@@ -1,3 +1,7 @@
+import os
+import time
+import datetime
+
 class FileCount:
     def file_count(self, input_directory, input_years, file_extensions=None):
         one_year_in_days = 365

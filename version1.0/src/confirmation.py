@@ -1,17 +1,16 @@
-
 class ConfirmationQuestions:
 
     def confirmation(self):
-        display_menu = ChangeTheHandsOfTime()
-        
+
         while True:
-            choice = input("""Enter 'y' for yes or enter 'n' for no:\n""")
+            choice = input("""Enter 'y' for yes or enter 'n' for no:\n""").lower()
 
-            if choice == 'n':
-                return null
+            if choice == 'y':
+                return True
 
-            elif choice == 'y':
-                break
+            elif choice == 'n':
+                return False
 
             else:
-                print("Invalid choice. Please select a valid option.")
+                print("Invalid choice. Please select a valid option.\n")
+                print(".............................................\n")

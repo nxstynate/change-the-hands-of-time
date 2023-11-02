@@ -1,3 +1,7 @@
+import os
+import time
+import datetime
+
 class ChangeTimeStamps:
     def change_time_stamp(self, input_directory, input_years):
         one_year_in_days = 365
