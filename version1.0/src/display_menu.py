@@ -21,23 +21,37 @@ class DisplayMenu:
 
             if choice == '1': 
                 file_path = input("Enter path to folder:\n")
-                number_of_years = input("Enter number of years:\n")
-                print(f"You have {file_count.file_count(file_path, number_of_years)} files that are {number_of_years} years old.\n")
+                if os.path.exists(file_path):
+                    number_of_years = input("Enter number of years:\n")
+                    if number_of_years.isdigit():
+                        print(f"You have {file_count.file_count(file_path, number_of_years)} files and {file_count.folder_count(file_path, number_of_years)} folders that are {number_of_years} years old.\n")
+                        
+                    else: 
+                        invalid_message.invalid_number_message()
+
+                else: 
+                    invalid_message.invalid_path_message()
 
             elif choice == '2':
                 file_path = input("Enter path to folder:\n")
-                number_of_years = input("Enter number of years:\n")
-                number_of_files = file_count.file_count(file_path, number_of_years)
-                print(f"You have {number_of_files} files that are {number_of_years} years old.\n")
-                print(f"You are about to change the the timestamp on {number_of_files} files.\nDo you want to continue?")
+                if os.path.exists(file_path):
+                    number_of_years = input("Enter number of years:\n")
+                    if number_of_years.isdigit():
 
-                if confirmation.confirmation():
-                    change_time_stamps.change_time_stamp(file_path, number_of_years)
-                    print(f"Conversion Completed:\n{file_path}")
-                    print(".............................................\n")
+                        number_of_files = file_count.file_count(file_path, number_of_years)
+                        print(f"You have {number_of_files} files that are {number_of_years} years old.\n")
+                        print(f"You are about to change the the timestamp on {number_of_files} files.\nDo you want to continue?")
+
+                        if confirmation.confirmation():
+                            change_time_stamps.change_time_stamp(file_path, number_of_years)
+                            print(f"Conversion Completed:\n{file_path}")
+                            print(".............................................\n")
+
+                    else: 
+                        invalid_message.invalid_number_message()
 
                 else: 
-                    invalid_message.invalid_choice_message()
+                    invalid_message.invalid_path_message()
 
 
             elif choice == '3':
