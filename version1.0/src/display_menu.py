@@ -1,6 +1,7 @@
 from src.confirmation import ConfirmationQuestions
 from src.file_count import FileCount
 from src.change_time_statmps import ChangeTimeStamps
+from src.invalid_choice_message import InvalidChoice
 import os
 import time
 import datetime
@@ -11,6 +12,7 @@ class DisplayMenu:
         confirmation = ConfirmationQuestions()
         file_count = FileCount()
         change_time_stamps = ChangeTimeStamps()
+        invalid_message = InvalidChoice()
 
         while True:
             print("Hands of Time:\n1. Scan\n2. Run\n3. Quit\n")
@@ -30,12 +32,12 @@ class DisplayMenu:
                 print(f"You are about to change the the timestamp on {number_of_files} files.\nDo you want to continue?")
 
                 if confirmation.confirmation():
-                    return
-
-                elif confirmation.confirmation() == True: 
                     change_time_stamps.change_time_stamp(file_path, number_of_years)
                     print(f"Conversion Completed:\n{file_path}")
-                    #fix the logic in this elif conditional at the moment it's not working. i need it to be able to ask if the user wants to cointue to proceed to convert the files if they choose yes it'll proceed with the conversion process via the function if no the the program will start over at the begining.
+                    print(".............................................\n")
+
+                else: 
+                    invalid_message.invalid_choice_message()
 
 
             elif choice == '3':
@@ -45,5 +47,5 @@ class DisplayMenu:
                 print(".............................................\n")
 
             else: 
-                print("Invalid choice. Please select a valid option.\n")
+                invalid_message.invalid_choice_message()
                 print(".............................................\n")
