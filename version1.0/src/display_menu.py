@@ -23,10 +23,11 @@ class DisplayMenu:
                 file_path = input("Enter path to folder:\n")
                 if os.path.exists(file_path):
                     number_of_years = input("Enter number of years:\n")
-                    if number_of_years.isdigit():
+                    try: 
+                        number = float(number_of_years)
                         print(f"You have {file_count.file_count(file_path, number_of_years)} files and {file_count.folder_count(file_path, number_of_years)} folders that are {number_of_years} years old.\n")
-                        
-                    else: 
+
+                    except ValueError:
                         invalid_message.invalid_number_message()
 
                 else: 
