@@ -18,9 +18,11 @@ class FileCount:
 
                 if file_extensions is None or os.path.splitext(filename)[1] in file_extensions:
                     count += 1
+                    print(f"\rNumber Of Files Found: {count}", end='', flush=True)
 
                 if (self.current_time - file_mtime).days > self.one_year_in_days * int(input_years):
                     count += 1
+                    print(f"\rNumber Of Files Found: {count}", end='', flush=True)
 
                 else:
                     break

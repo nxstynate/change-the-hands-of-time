@@ -1,4 +1,4 @@
-class InvalidChoice:
+class Messages:
     def invalid_choice_message(self):
         print("Invalid choice. Please select a valid option.\n")
 
@@ -7,3 +7,6 @@ class InvalidChoice:
 
     def invalid_number_message(self):
         print("Invalid. Please enter a number.\n")
+
+    def dotted_lines(self):
+        print("................................................\n")

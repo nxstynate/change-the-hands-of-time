@@ -1,9 +1,9 @@
-from src.invalid_choice_message import InvalidChoice
+from src.messages import Messages
 
 class ConfirmationQuestions:
 
     def confirmation(self):
-        invalid_message = InvalidChoice()
+        messages = Messages()
 
         while True:
             choice = input("""Enter 'y' for yes or enter 'n' for no:\n""").lower()
@@ -15,5 +15,5 @@ class ConfirmationQuestions:
                 return False
 
             else:
-                invalid_message.invalid_choice_message()
-                print(".............................................\n")
+                messages.invalid_choice_message()
+                messages.dotted_lines()

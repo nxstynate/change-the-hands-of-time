@@ -1,7 +1,7 @@
 from src.confirmation import ConfirmationQuestions
 from src.file_count import FileCount
 from src.change_time_statmps import ChangeTimeStamps
-from src.invalid_choice_message import InvalidChoice
+from src.messages import Messages
 import os
 import time
 import datetime
@@ -12,9 +12,10 @@ class DisplayMenu:
         confirmation = ConfirmationQuestions()
         file_count = FileCount()
         change_time_stamps = ChangeTimeStamps()
-        invalid_message = InvalidChoice()
+        messages = Messages()
 
         while True:
+            messages.dotted_lines()
             print("Hands of Time:\n1. Scan\n2. Run\n3. Quit\n")
 
             choice = input("Enter your choice:\n")
@@ -25,42 +26,44 @@ class DisplayMenu:
                     number_of_years = input("Enter number of years:\n")
                     try: 
                         number = float(number_of_years)
-                        print(f"You have {file_count.file_count(file_path, number_of_years)} files and {file_count.folder_count(file_path, number_of_years)} folders that are {number_of_years} years old.\n")
+                        print(f"\nYou have {file_count.file_count(file_path, number)} files and {file_count.folder_count(file_path, number)} folders that are {number} years old.\n")
 
                     except ValueError:
-                        invalid_message.invalid_number_message()
+                        messages.invalid_number_message()
 
                 else: 
-                    invalid_message.invalid_path_message()
+                    messages.invalid_path_message()
 
             elif choice == '2':
                 file_path = input("Enter path to folder:\n")
                 if os.path.exists(file_path):
                     number_of_years = input("Enter number of years:\n")
-                    if number_of_years.isdigit():
+                    try: 
+                        number = float(number_of_years)
 
                         number_of_files = file_count.file_count(file_path, number_of_years)
-                        print(f"You have {number_of_files} files that are {number_of_years} years old.\n")
+                        print(f"\nYou have {number_of_files} files that are {number_of_years} years old.\n")
                         print(f"You are about to change the the timestamp on {number_of_files} files.\nDo you want to continue?")
 
                         if confirmation.confirmation():
                             change_time_stamps.change_time_stamp(file_path, number_of_years)
                             print(f"Conversion Completed:\n{file_path}")
-                            print(".............................................\n")
+                            messages.dotted_lines()
 
-                    else: 
-                        invalid_message.invalid_number_message()
+                    except ValueError: 
+                        messages.invalid_number_message()
 
                 else: 
-                    invalid_message.invalid_path_message()
+                    messages.invalid_path_message()
 
 
             elif choice == '3':
                 print("Are you sure you want to quit?\n")
                 if confirmation.confirmation():
                     return
-                print(".............................................\n")
+                messages.dotted_lines()
 
             else: 
-                invalid_message.invalid_choice_message()
-                print(".............................................\n")
+                messages.invalid_choice_message()
+                messages.dotted_lines()
+
