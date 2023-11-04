@@ -5,6 +5,9 @@ import time
 import datetime
 import subprocess
 
+# need to fix the actual conversion of files, at the moment the files do not get their tmestamps chagned.
+# work on the change_time_stamps module to fix this issue.
+
 
 class ChangeTheHandsOfTime:
 

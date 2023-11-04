@@ -4,10 +4,10 @@ import datetime
 
 class ChangeTimeStamps:
     def change_time_stamp(self, input_directory, input_years):
-        one_year_in_days = 365
+        one_year_in_seconds = 365 * 24 * 60 * 60
         count = 0
 
-        current_time = datetime.datetime.now()
+        current_time = time.time()
 
         for root, _, files in os.walk(input_directory):
             for filename in files:
@@ -15,10 +15,8 @@ class ChangeTimeStamps:
                 file_stat = os.stat(filepath)
                 file_mtime = datetime.datetime.fromtimestamp(file_stat.st_mtime)
 
-                if (current_time - file_mtime).days > one_year_in_days * float(input_years):
-                    os.utime(filepath, times=(current_time.timestamp(), current_time.timestamp()))
+                if (current_time - file_mtime.timestamp()) > (one_year_in_seconds * float(input_years)):
+                    print('hello world')
+                    os.utime(filepath, times=(current_time, current_time))
                     count += 1
-                    print(f"\rNumber Of Files Found: {count}", end='', flush=True)
-                else:
-                    break
 
