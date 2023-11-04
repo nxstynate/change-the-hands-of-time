@@ -15,7 +15,7 @@ class ChangeTimeStamps:
                 file_stat = os.stat(filepath)
                 file_mtime = datetime.datetime.fromtimestamp(file_stat.st_mtime)
 
-                if (current_time - file_mtime).days > one_year_in_days * int(input_years):
+                if (current_time - file_mtime).days > one_year_in_days * float(input_years):
                     os.utime(filepath, times=(current_time.timestamp(), current_time.timestamp()))
                     count += 1
                     print(f"\rNumber Of Files Found: {count}", end='', flush=True)

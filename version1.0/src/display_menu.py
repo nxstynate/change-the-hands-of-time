@@ -2,6 +2,7 @@ from src.confirmation import ConfirmationQuestions
 from src.file_count import FileCount
 from src.change_time_statmps import ChangeTimeStamps
 from src.messages import Messages
+from src.progress_bar import ProgressBar
 import os
 import time
 import datetime
@@ -13,6 +14,7 @@ class DisplayMenu:
         file_count = FileCount()
         change_time_stamps = ChangeTimeStamps()
         messages = Messages()
+        progress_bar = ProgressBar()
 
         while True:
             messages.dotted_lines()
@@ -41,13 +43,14 @@ class DisplayMenu:
                     try: 
                         number = float(number_of_years)
 
-                        number_of_files = file_count.file_count(file_path, number_of_years)
-                        print(f"\nYou have {number_of_files} files that are {number_of_years} years old.\n")
+                        number_of_files = file_count.file_count(file_path, number)
+                        print(f"\nYou have {number_of_files} files that are {number} years old.\n")
                         print(f"You are about to change the the timestamp on {number_of_files} files.\nDo you want to continue?")
 
                         if confirmation.confirmation():
-                            change_time_stamps.change_time_stamp(file_path, number_of_years)
-                            print(f"Conversion Completed:\n{file_path}")
+                            progress_bar.scan_items(number_of_files)
+                            change_time_stamps.change_time_stamp(file_path, number)
+                            print(f"\nConversion Completed:\n{file_path}")
                             messages.dotted_lines()
 
                     except ValueError: 
