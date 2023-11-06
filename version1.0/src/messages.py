@@ -9,4 +9,18 @@ class Messages:
         print("Invalid. Please enter a number.\n")
 
     def dotted_lines(self):
-        print("................................................\n")
+        print("\n................................................\n")
+
+    def confirmation(self):
+        while True:
+            choice = input("""Enter 'y' for yes or enter 'n' for no:\n""").lower()
+
+            if choice == 'y':
+                return True
+
+            elif choice == 'n':
+                return False
+
+            else:
+                invalid_choice_message()
+                dotted_lines()

@@ -1,8 +1,6 @@
-from src.confirmation import ConfirmationQuestions
-from src.file_count import FileCount
-from src.change_time_statmps import ChangeTimeStamps
 from src.messages import Messages
 from src.progress_bar import ProgressBar
+from src.init_timestamp import InitTimestampModification
 import os
 import time
 import datetime
@@ -10,9 +8,6 @@ import datetime
 class DisplayMenu:
 
     def display_menu(self):
-        confirmation = ConfirmationQuestions()
-        file_count = FileCount()
-        change_time_stamps = ChangeTimeStamps()
         messages = Messages()
         progress_bar = ProgressBar()
 
@@ -28,7 +23,11 @@ class DisplayMenu:
                     number_of_years = input("Enter number of years:\n")
                     try: 
                         number = float(number_of_years)
-                        print(f"\nYou have {file_count.file_count(file_path, number)} files and {file_count.folder_count(file_path, number)} folders that are {number} years old.\n")
+                        change_time_stamp = InitTimestampModification(file_path, number)
+                        number_of_files = change_time_stamp.timestamp_file_count()
+                        number_of_folders = change_time_stamp.timestamp_folder_count()
+                        print(f"You have {number_of_files} files and {number_of_folders} folders that are {number} years old.\n")
+                        time.sleep(5)
 
                     except ValueError:
                         messages.invalid_number_message()
@@ -42,16 +41,19 @@ class DisplayMenu:
                     number_of_years = input("Enter number of years:\n")
                     try: 
                         number = float(number_of_years)
+                        change_time_stamp = InitTimestampModification(file_path, number)
+                        number_of_files = change_time_stamp.timestamp_file_count()
+                        number_of_folders = change_time_stamp.timestamp_folder_count()
+                        print(f"You have {number_of_files} files and {number_of_folders} folders that are {number} years old.\n")
+                        print(f"You are about to change the the timestamp on {number_of_files} files and {number_of_folders} folders.\nDo you want to continue?")
 
-                        number_of_files = file_count.file_count(file_path, number)
-                        print(f"\nYou have {number_of_files} files that are {number} years old.\n")
-                        print(f"You are about to change the the timestamp on {number_of_files} files.\nDo you want to continue?")
-
-                        if confirmation.confirmation():
+                        if messages.confirmation():
                             progress_bar.scan_items(number_of_files)
-                            change_time_stamps.change_time_stamp(file_path, number)
+                            change_time_stamp.timestamp_modification_file()
+                            change_time_stamp.timestamp_modification_folder()
                             print(f"\nConversion Completed:\n{file_path}")
                             messages.dotted_lines()
+                            time.sleep(5)
 
                     except ValueError: 
                         messages.invalid_number_message()
@@ -62,7 +64,7 @@ class DisplayMenu:
 
             elif choice == '3':
                 print("Are you sure you want to quit?\n")
-                if confirmation.confirmation():
+                if messages.confirmation():
                     return
                 messages.dotted_lines()
 
