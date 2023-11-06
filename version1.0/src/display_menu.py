@@ -1,9 +1,8 @@
 from src.messages import Messages
 from src.progress_bar import ProgressBar
-from src.init_timestamp import InitTimestampModification
+from src.init_timestamp_modification import InitTimestampModification
 import os
 import time
-import datetime
 
 class DisplayMenu:
 
