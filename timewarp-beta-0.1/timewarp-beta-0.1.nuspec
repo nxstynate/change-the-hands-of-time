@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>timewarp-beta-0.1</id>
+    <version>0.1.0</version>
+    <title>timewarp-beta-0.1</title>
+    <authors>Nate Lewis aka: nxstynate</authors>
+    <projectUrl>https://github.com/nxstynate/change-the-hands-of-time</projectUrl>
+    <tags>timewarp-beta-0.1,cli,python</tags>
+    <summary>Timewarp is a CLI tool that will change the timestamps on your files and folders.</summary>
+    <description>Scan the number of files that are past a spcificied year amount and then change the timestams on the files and folders based on that parameter. </description>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
